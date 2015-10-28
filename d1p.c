@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <omp.h>
 
-#define CUTOFF 1000
+#define CUTOFF 0
 
 int max(int a, int b){ return a<b?b:a; }
 
