@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <omp.h>
 
-#define CUTOFF 100
+#define CUTOFF 1000
 
 int max(int a, int b){ return a<b?b:a; }
 
@@ -27,24 +27,39 @@ void swap(int* a, int* b){
 	*b = tmp;
 }
 
-void p_fusion_seq(int* T, int p1, int r1, int p2, int r2, int* A, int p3){
+//~ void p_fusion_seq(int* T, int p1, int r1, int p2, int r2, int* A, int p3){
+	//~ int n1 = r1 - p1 + 1;
+	//~ int n2 = r2 - p2 + 1;
+	//~ if ( n1 < n2 ){
+		//~ swap(&p1, &p2);
+		//~ swap(&r1, &r2);
+		//~ swap(&n1, &n2);
+	//~ }
+	//~ if ( n1 == 0 ) {
+		//~ return;
+	//~ }
+	//~ else {
+		//~ int q1 = (p1+r1)/2;
+		//~ int q2 = find(T[q1], T, p2, r2);
+		//~ int q3 = p3 + (q1-p1) + (q2-p2);
+		//~ A[q3] = T[q1];
+		//~ p_fusion_seq(T, p1, q1-1, p2, q2-1, A, p3);
+		//~ p_fusion_seq(T, q1+1, r1, q2, r2, A, q3+1);
+	//~ }
+//~ }
+
+void p_fusion_seq(int* T, int p1, int r1, int p2, int r2, int* A, int p3) {
+	int i=p1, j=p2, k;
 	int n1 = r1 - p1 + 1;
 	int n2 = r2 - p2 + 1;
-	if ( n1 < n2 ){
-		swap(&p1, &p2);
-		swap(&r1, &r2);
-		swap(&n1, &n2);
-	}
-	if ( n1 == 0 ) {
-		return;
-	}
-	else {
-		int q1 = (p1+r1)/2;
-		int q2 = find(T[q1], T, p2, r2);
-		int q3 = p3 + (q1-p1) + (q2-p2);
-		A[q3] = T[q1];
-		p_fusion_seq(T, p1, q1-1, p2, q2-1, A, p3);
-		p_fusion_seq(T, q1+1, r1, q2, r2, A, q3+1);
+	for (k=0 ; k<n1+n2 ; k++) {
+		if ( i == p1+n1 ) {
+			A[k] = T[j++];
+		} else if ( j == p2+n2 ) {
+			A[k] = T[i++];
+		} else {
+			A[k] = (T[i] <= T[j]) ? T[i++] : T[j++];
+		}		
 	}
 }
 
@@ -53,9 +68,7 @@ void p_fusion(int* T, int p1, int r1, int p2, int r2, int* A, int p3){
 	int n2 = r2 - p2 + 1;
 	
 	if ( n1 < CUTOFF ) {
-		#pragma omp task
-		p_fusion_seq(T,p1,r1,p2,r2,A,p3);
-		return;
+		return p_fusion_seq(T,p1,r1,p2,r2,A,p3);
 	}
 	
 	if ( n1 < n2 ){
@@ -72,11 +85,18 @@ void p_fusion(int* T, int p1, int r1, int p2, int r2, int* A, int p3){
 		int q3 = p3 + (q1-p1) + (q2-p2);
 		A[q3] = T[q1];
 		
-		#pragma omp task
-		p_fusion(T, p1, q1-1, p2, q2-1, A, p3);
-		#pragma omp task
-		p_fusion(T, q1+1, r1, q2, r2, A, q3+1);
-		//~ #pragma omp taskwait
+		#pragma omp parallel sections num_threads(2)
+		{
+			#pragma omp section
+			{
+				p_fusion(T, p1, q1-1, p2, q2-1, A, p3);
+			}
+			#pragma omp section
+			{
+				p_fusion(T, q1+1, r1, q2, r2, A, q3+1);
+			}
+			//~ #pragma omp taskwait
+		}
 	}
 }
 
@@ -111,17 +131,15 @@ int main() {
 		scanf("%d", T+i);
 	}
 	
-	for ( i = 0 ; i < 2*n ; i++ ){
-		printf("%d ", T[i]);
-	} printf("\n---\n");
+	//~ for ( i = 0 ; i < 2*n ; i++ ){
+		//~ printf("%d ", T[i]);
+	//~ } printf("\n---\n");
 	double start = omp_get_wtime();
-	#pragma omp parallel
-	#pragma omp single nowait
 	p_fusion(T, 0, n-1, n, 2*n-1, R, 0);
 	double stop = omp_get_wtime();
-	for ( i = 0 ; i < 2*n ; i++ ){
-		printf("%d ", R[i]);
-	} printf("\n");
+	//~ for ( i = 0 ; i < 2*n ; i++ ){
+		//~ printf("%d ", R[i]);
+	//~ } printf("\n");
 	
 	free(T);
 	printf("execution time of merge: %lf\n", stop-start);
