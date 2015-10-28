@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <omp.h>
 
+#define CUTOFF 100
+
 int max(int a, int b){ return a<b?b:a; }
 
 int find(int x, int* T, int p, int r){
@@ -25,9 +27,36 @@ void swap(int* a, int* b){
 	*b = tmp;
 }
 
+void p_fusion_seq(int* T, int p1, int r1, int p2, int r2, int* A, int p3){
+	int n1 = r1 - p1 + 1;
+	int n2 = r2 - p2 + 1;
+	if ( n1 < n2 ){
+		swap(&p1, &p2);
+		swap(&r1, &r2);
+		swap(&n1, &n2);
+	}
+	if ( n1 == 0 ) {
+		return;
+	}
+	else {
+		int q1 = (p1+r1)/2;
+		int q2 = find(T[q1], T, p2, r2);
+		int q3 = p3 + (q1-p1) + (q2-p2);
+		A[q3] = T[q1];
+		p_fusion_seq(T, p1, q1-1, p2, q2-1, A, p3);
+		p_fusion_seq(T, q1+1, r1, q2, r2, A, q3+1);
+	}
+}
+
 void p_fusion(int* T, int p1, int r1, int p2, int r2, int* A, int p3){
 	int n1 = r1 - p1 + 1;
 	int n2 = r2 - p2 + 1;
+	
+	if ( n1 < CUTOFF ) {
+		#pragma omp task
+		p_fusion_seq(T,p1,r1,p2,r2,A,p3);
+		return;
+	}
 	
 	if ( n1 < n2 ){
 		swap(&p1, &p2);
