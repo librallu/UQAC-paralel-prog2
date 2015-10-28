@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <omp.h>
 
-#define CUTOFF 42
+#define CUTOFF 1000
 
 int max(int a, int b){ return a<b?b:a; }
 
@@ -70,15 +70,11 @@ void p_fusion(int* T, int p1, int r1, int p2, int r2, int* A, int p3){
 		int q3 = p3 + (q1-p1) + (q2-p2);
 		A[q3] = T[q1];
 		
-		#pragma omp parallel
-		#pragma omp single nowait
-		{
-			#pragma omp task
-			p_fusion(T, p1, q1-1, p2, q2-1, A, p3);
-			#pragma omp task
-			p_fusion(T, q1+1, r1, q2, r2, A, q3+1);
-			#pragma omp taskwait
-		}
+		#pragma omp task
+		p_fusion(T, p1, q1-1, p2, q2-1, A, p3);
+		#pragma omp task
+		p_fusion(T, q1+1, r1, q2, r2, A, q3+1);
+		#pragma omp taskwait
 	}
 }
 
@@ -117,6 +113,8 @@ int main() {
 		printf("%d ", T[i]);
 	} printf("\n---\n");
 	double start = omp_get_wtime();
+	#pragma omp parallel
+	#pragma omp single nowait
 	p_fusion(T, 0, n-1, n, 2*n-1, R, 0);
 	double stop = omp_get_wtime();
 	for ( i = 0 ; i < 2*n ; i++ ){
