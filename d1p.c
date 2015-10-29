@@ -127,11 +127,19 @@ int main() {
 	CUTOFF = n/omp_get_num_threads();
 	printf("CUTOFF: %d\n", CUTOFF);
 	int* T = (int*)malloc(sizeof(int)*2*n);
+	int* T2 = (int*)malloc(sizeof(int)*2*n);
 	int* R = (int*)malloc(sizeof(int)*2*n);
 	int i;
 	for ( i = 0 ; i < 2*n ; i++ ) {
-		scanf("%d", T+i);
+		scanf("%d", T2+i);
 	}
+	
+	
+	#pragma omp parallel for
+	for ( i = 0 ; i < 2*n ; i++ ) {
+		T[i] = T2[i];
+	}
+	free(T2);
 	
 	//~ for ( i = 0 ; i < 2*n ; i++ ){
 		//~ printf("%d ", T[i]);
