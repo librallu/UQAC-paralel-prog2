@@ -141,15 +141,19 @@ int main() {
 		scanf("%d", T+i);
 	}
 	
-	//~ for ( i = 0 ; i < 2*n ; i++ ){
-		//~ printf("%d ", T[i]);
-	//~ } printf("\n---\n");
+	if ( n < 100 ) {
+		for ( i = 0 ; i < 2*n ; i++ ){
+			printf("%d ", T[i]);
+		} printf("\n---\n");
+	}
 	double start = omp_get_wtime();
 	p_fusion(T, 0, n-1, n, 2*n-1, R, 0);
 	double stop = omp_get_wtime();
-	//~ for ( i = 0 ; i < 2*n ; i++ ){
-		//~ printf("%d ", R[i]);
-	//~ } printf("\n");
+	if ( n < 100 ) {
+		for ( i = 0 ; i < 2*n ; i++ ){
+			printf("%d ", R[i]);
+		} printf("\n");
+	}
 	
 	free(T);
 	printf("execution time of merge: %lf\n", stop-start);
