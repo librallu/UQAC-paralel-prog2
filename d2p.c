@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <omp.h>
 
-#define CUTOFF 1000
+int CUTOFF = 1000;
 
 
 int max(int a, int b){ return a<b?b:a; }
@@ -132,6 +132,8 @@ int main() {
 	//~ 
 	int n;
 	scanf("%d", &n);
+	CUTOFF = n/omp_get_num_threads();
+	printf("CUTOFF: %d\n", CUTOFF);
 	int* T = (int*)malloc(sizeof(int)*2*n);
 	int* R = (int*)malloc(sizeof(int)*2*n);
 	int i;
