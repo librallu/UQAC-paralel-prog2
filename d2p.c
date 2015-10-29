@@ -132,7 +132,7 @@ int main() {
 	//~ 
 	int n;
 	scanf("%d", &n);
-	CUTOFF = n/omp_get_num_threads();
+	CUTOFF = n/omp_get_num_procs();
 	printf("CUTOFF: %d\n", CUTOFF);
 	int* T = (int*)malloc(sizeof(int)*2*n);
 	int* R = (int*)malloc(sizeof(int)*2*n);
