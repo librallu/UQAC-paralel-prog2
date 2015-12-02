@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <ctype.h>
-//~ #include <mpi.h>
+#include <mpi.h>
 
 
 void printHelp(char* name){
@@ -27,15 +27,42 @@ void readMatrix(int** M, int n) {
 	}
 }
 
-void multiplyMatrix(int** A, int** B, int** C, int n){
+//~ void multiplyMatrix(int** A, int** B, int** C, int n){
+	//~ int i,j,k,s;
+	//~ for ( i = 0 ; i < n ; i++ )
+		//~ for ( j = 0 ; j < n ; j++ ) {
+			//~ s = 0;
+			//~ for ( k = 0 ; k < n ; k++ )
+				//~ s += A[i][k]*B[k][j];
+			//~ C[i][j] = s;
+		//~ }
+//~ }
+
+void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 	int i,j,k,s;
-	for ( i = 0 ; i < n ; i++ )
+	MPI_Status status;
+	for ( i = rank ; i < n ; i+=size ) {
 		for ( j = 0 ; j < n ; j++ ) {
 			s = 0;
 			for ( k = 0 ; k < n ; k++ )
 				s += A[i][k]*B[k][j];
 			C[i][j] = s;
 		}
+	}
+	if ( rank != 0 ) { // si un esclave finit le travail
+		for ( i = rank ; i < n ; i+=size )
+			// envoi de message au maitre
+			MPI_Send(C[i], n, MPI_INT, 0, i, MPI_COMM_WORLD);
+	} else { // Le maitre reçoit le travail des esclaves
+		for ( j = 1 ; j < size ; j++ ) {
+			for ( i = j ; i < n ; i+=size )
+				MPI_Recv(C[i], n, MPI_INT, j, i, MPI_COMM_WORLD, &status);
+		}
+	}
+	// Tout le monde se synchronise
+	MPI_Barrier(MPI_COMM_WORLD);
+	
+	MPI_Finalize();
 }
 
 int main(int argc, char** argv){
@@ -71,10 +98,27 @@ int main(int argc, char** argv){
 	readMatrix(A, n);
 	readMatrix(B, n);
 	
-	multiplyMatrix(A, B, C, n);
+	
+	// initialisation de MPI
+	int size, rank;
+	double t;
+	MPI_Init(&argc, &argv);
+	MPI_Comm_size(MPI_COMM_WORLD, &size);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	
+	// Multiplication de la matrice
+	MPI_Barrier(MPI_COMM_WORLD);
+	if(rank == 0) t=MPI_Wtime();
+	multiplyMatrix(A, B, C, n, rank, size);
+	if(rank == 0) {
+		t=MPI_Wtime()-t;
+		printf("Execution time : %lf\n", t);
+	}
 
+	// affichage si demandé
 	if ( printMatrix ) afficheMatrix(C, n);
 	
+	// Libération de la mémoire
 	for ( i = 0 ; i < n ; i++ ){
 		free(A[i]);
 		free(B[i]);
