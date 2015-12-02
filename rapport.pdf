@@ -1,0 +1,451 @@
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+1 0 obj
+<< /F1 2 0 R /F2 3 0 R >>
+endobj
+2 0 obj
+<< /BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font >>
+endobj
+3 0 obj
+<< /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font >>
+endobj
+4 0 obj
+<< /Contents 13 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 12 0 R /Resources << /Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ] >> /Rotate 0 /Trans <<  >> 
+  /Type /Page >>
+endobj
+5 0 obj
+<< /Outlines 7 0 R /PageLabels 14 0 R /PageMode /UseNone /Pages 12 0 R /Type /Catalog >>
+endobj
+6 0 obj
+<< /Author () /CreationDate (D:20151029124739+05'00') /Creator (\(unspecified\)) /Keywords () /Producer (ReportLab PDF Library - www.reportlab.com) /Subject (\(unspecified\)) 
+  /Title (Programmation sur architectures parall\350les) >>
+endobj
+7 0 obj
+<< /Count 4 /First 8 0 R /Last 11 0 R /Type /Outlines >>
+endobj
+8 0 obj
+<< /Dest [ 4 0 R /XYZ 62.69291 729.0236 0 ] /Next 9 0 R /Parent 7 0 R /Title (Devoir 2) >>
+endobj
+9 0 obj
+<< /Dest [ 4 0 R /XYZ 62.69291 636.0236 0 ] /Next 10 0 R /Parent 7 0 R /Prev 8 0 R /Title (rendu) >>
+endobj
+10 0 obj
+<< /Dest [ 4 0 R /XYZ 62.69291 441.0236 0 ] /Next 11 0 R /Parent 7 0 R /Prev 9 0 R /Title (Analyse) >>
+endobj
+11 0 obj
+<< /Dest [ 4 0 R /XYZ 62.69291 252.0236 0 ] /Parent 7 0 R /Prev 10 0 R /Title (Note sur la r\351alisation des algorithmes) >>
+endobj
+12 0 obj
+<< /Count 1 /Kids [ 4 0 R ] /Type /Pages >>
+endobj
+13 0 obj
+<< /Length 7088 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 741.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4 Tm /F2 20 Tf 24 TL 28.20488 0 Td (Programmation sur architectures parall\350les) Tj T* -28.20488 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 708.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Devoir 2) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 696.0236 cm
+Q
+q
+1 0 0 1 62.69291 696.0236 cm
+Q
+q
+1 0 0 1 62.69291 684.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (\351tudiants : Basile FETET, Luc LIBRALESSO, Olivier SOLDANO) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 678.0236 cm
+Q
+q
+1 0 0 1 62.69291 666.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (login: mpi14) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 660.0236 cm
+Q
+q
+1 0 0 1 62.69291 648.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (mdp: dAvAuHK) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 648.0236 cm
+Q
+q
+1 0 0 1 62.69291 615.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (rendu) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 597.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Sont pr\351sents dans le r\351pertoire) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 591.0236 cm
+Q
+q
+1 0 0 1 62.69291 591.0236 cm
+Q
+q
+1 0 0 1 62.69291 579.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (d1s.c qui est la version s\351quentielle de l'algorithme) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 573.0236 cm
+Q
+q
+1 0 0 1 62.69291 561.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (d1p.c qui est la version parall\350le avec openMP) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 555.0236 cm
+Q
+q
+1 0 0 1 62.69291 531.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .42528 Tw (d2p.c qui est la version parall\350le avec pthread. On note que d2p utilise aussi openMP pour le calcul) Tj T* 0 Tw (du temps d'ex\351cution.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 525.0236 cm
+Q
+q
+1 0 0 1 62.69291 501.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .469984 Tw (Makefile qui continent les r\350gles pour compiler les trois programmes et lance les tests sur l'instance) Tj T* 0 Tw (la plus grosse \(inst4.txt\)) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 495.0236 cm
+Q
+q
+1 0 0 1 62.69291 471.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .173735 Tw (gen.py qui contient le script qui permet de g\351n\351rer des instances de taille quelconque pour tester les) Tj T* 0 Tw (programmes.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 465.0236 cm
+Q
+q
+1 0 0 1 62.69291 453.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (inst[1-4].txt des instances de diff\351rentes tailles \(inst4 contient 200 000 \351l\351ments\)) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 453.0236 cm
+Q
+q
+1 0 0 1 62.69291 420.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Analyse) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 390.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .055697 Tw (Nous avons effectu\351 quelques tests sur les diff\351rents programmes. Nous obtenons des r\351sultats avec une) Tj T* 0 Tw (instance de 200 000 \351l\351ments en entr\351e de l'ordre de :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 384.0236 cm
+Q
+q
+1 0 0 1 62.69291 384.0236 cm
+Q
+q
+1 0 0 1 62.69291 372.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (0.015 secondes pour d1s) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 366.0236 cm
+Q
+q
+1 0 0 1 62.69291 354.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (0.002 secondes pour d1p) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 348.0236 cm
+Q
+q
+1 0 0 1 62.69291 336.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (0.060 secondes pour d2p) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 336.0236 cm
+Q
+q
+1 0 0 1 62.69291 294.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 26 Tm /F1 10 Tf 12 TL 1.385868 Tw (De ces r\351sultats, nous constatons que la version openMP est en moyenne 7-8 fois plus rapide que la) Tj T* 0 Tw .429985 Tw (version s\351quentielle, ce qui est un gain int\351ressant. Cependant, la version pthread est environ 4 fois plus) Tj T* 0 Tw (lente que la version s\351quentielle.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 264.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 1.870542 Tw (Ce dernier r\351sultat est surprenant car la charge de travail pthread se limite \340 faire un 'spawn' sur le) Tj T* 0 Tw (premier appel r\351cursif dans l'algorithme et un join apr\350s.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 231.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Note sur la r\351alisation des algorithmes) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 177.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 38 Tm /F1 10 Tf 12 TL 4.120814 Tw (Pour l'impl\351mentation des algorithmes parall\350les, nous avons opt\351 pour appliquer un cutoff afin) Tj T* 0 Tw .71436 Tw (d'am\351liorer les performances. L'id\351e est que pour les petits probl\350mes \(dont la taille est inf\351rieure \340 une) Tj T* 0 Tw .714983 Tw (constante \(CUTOFF\), une version s\351quentielle de l'algorithme sera appliqu\351e. Et dans les autres cas, la) Tj T* 0 Tw (version parall\350le.) Tj T* ET
+Q
+Q
+ 
+endstream
+endobj
+14 0 obj
+<< /Nums [ 0 15 0 R ] >>
+endobj
+15 0 obj
+<< /S /D /St 1 >>
+endobj
+xref
+0 16
+0000000000 65535 f
+0000000075 00000 n
+0000000119 00000 n
+0000000229 00000 n
+0000000344 00000 n
+0000000553 00000 n
+0000000660 00000 n
+0000000915 00000 n
+0000000990 00000 n
+0000001099 00000 n
+0000001218 00000 n
+0000001340 00000 n
+0000001485 00000 n
+0000001548 00000 n
+0000008693 00000 n
+0000008737 00000 n
+trailer
+<< /ID 
+ % ReportLab generated PDF document -- digest (http://www.reportlab.com)
+ [(\310\247\277B\2750\360\000D\205:vS\241\014\242) (\310\247\277B\2750\360\000D\205:vS\241\014\242)]
+ /Info 6 0 R /Root 5 0 R /Size 16 >>
+startxref
+8774
+%%EOF

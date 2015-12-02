@@ -1,0 +1,26 @@
+// before optimizing sequential algorithm in parallel programs
+./d1s < inst4.txt
+execution time of merge: 0.011796
+./d1p < inst4.txt
+execution time of merge: 0.006290
+./d2p < inst4.txt
+execution time of merge: 0.033191
+
+// after optimizing sequential algorithm
+./d1s < inst4.txt
+execution time of merge: 0.011896
+./d1p < inst4.txt
+execution time of merge: 0.001584
+./d2p < inst4.txt
+execution time of merge: 0.021507
+
+
+10M elements
+(^_^)[librallu@tomoyo:~/uqac/856/devoir2]$ ./d1s < inst5.txt 
+execution time of merge: 0.579701
+(^_^)[librallu@tomoyo:~/uqac/856/devoir2]$ ./d1p < inst5.txt 
+execution time of merge: 0.067618
+(^_^)[librallu@tomoyo:~/uqac/856/devoir2]$ ./d2p < inst5.txt 
+execution time of merge: 1.726305
+
+
