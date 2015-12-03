@@ -64,36 +64,6 @@ void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 }
 
 
-void pack_matrix(int **A, int **B, int* data, int n) {
-	int c=0,i,j;
-	for ( i = 0 ; i < n ; i++ )
-		for ( j = 0 ; j < n ; j++ ) {
-			data[c] = A[i][j];
-			c++;
-		}
-	for ( i = 0 ; i < n ; i++ )
-		for ( j = 0 ; j < n ; j++ ) {
-			data[c] = B[i][j];
-			c++;
-		}
-		
-}
-
-void unpack_matrix(int **A, int **B, int* data, int n) {
-	int c=0,i,j;
-	for ( i = 0 ; i < n ; i++ )
-		for ( j = 0 ; j < n ; j++ ) {
-			A[i][j] = data[c];
-			c++;
-		}
-	for ( i = 0 ; i < n ; i++ )
-		for ( j = 0 ; j < n ; j++ ) {
-			B[i][j] = data[c];
-			c++;
-		}
-}
-
-
 int main(int argc, char** argv){
 	
 	// initialisation de MPI
@@ -112,9 +82,7 @@ int main(int argc, char** argv){
 	int** A = (int**) malloc(sizeof(int*)*n);
 	int** B = (int**) malloc(sizeof(int*)*n);
 	int** C = (int**) malloc(sizeof(int*)*n);
-	
-	int* mat_data = (int*) malloc(sizeof(int*)*n*n*2);
-	
+		
 	if ( rank == 0 ) {
 	
 		// détermine la valeur de p sur la ligne de commande
@@ -139,19 +107,17 @@ int main(int argc, char** argv){
 			C[i] = (int*) malloc(n*sizeof(int));
 		readMatrix(A, n);
 		readMatrix(B, n);
-		pack_matrix(A, B, mat_data, n);
-		
-	} else { // Si il s'agit d'un noeud différent de 0
 		
 	}
 	
 	MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	MPI_Bcast(mat_data, 2*n*n, MPI_INT, 0, MPI_COMM_WORLD);
-	printf("rank:%d, n:%d\n", rank, n);
 	
-	if ( rank != 0 ){
-		unpack_matrix(A,B,mat_data,n);
+	for ( i = 0 ; i < n ; i++ ) {
+		MPI_Bcast(A[i], n, MPI_INT, 0, MPI_COMM_WORLD);
+		MPI_Bcast(B[i], n, MPI_INT, 0, MPI_COMM_WORLD);
 	}
+	
+	printf("rank:%d, n:%d\n", rank, n);
 	
 	afficheMatrix(A, n);
 	printf("\n");
@@ -183,8 +149,6 @@ int main(int argc, char** argv){
 	free(A);
 	free(B);
 	free(C);
-	
-	free(mat_data);
-	
+		
 	return 0;
 }
