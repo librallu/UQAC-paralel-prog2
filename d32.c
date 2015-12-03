@@ -4,11 +4,13 @@
 #include <ctype.h>
 #include <mpi.h>
 
-
+// Fonction qui affiche comment se servir du programme
 void printHelp(char* name){
 	printf("usage: %s [-p] n\n", name);
 }
 
+
+// Afiche la matrice M sur la sortie standard
 void afficheMatrix(int** M, int n) {
 	int i,j;
 	for ( i = 0 ; i < n ; i++ ){
@@ -18,6 +20,7 @@ void afficheMatrix(int** M, int n) {
 	}
 }
 
+// Lit la matrice M sur l'entrée standard
 void readMatrix(int** M, int n) {
 	int i,j;
 	for ( i = 0 ; i < n ; i++ ){
@@ -26,21 +29,14 @@ void readMatrix(int** M, int n) {
 	}
 }
 
-
-//~ void multiplyMatrix(int** A, int** B, int** C, int n){
-	//~ int i,j,k,s;
-	//~ for ( i = 0 ; i < n ; i++ )
-		//~ for ( j = 0 ; j < n ; j++ ) {
-			//~ s = 0;
-			//~ for ( k = 0 ; k < n ; k++ )
-				//~ s += A[i][k]*B[k][j];
-			//~ C[i][j] = s;
-		//~ }
-//~ }
-
+// Multiplication avec MPI de la matrice
+// on rajoute le paramètre rank et size pour
+// diviser la charge de travail sur chacun des noeuds
 void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 	int i,j,k,s;
 	MPI_Status status;
+	
+	// Partie calcul à proprement parler
 	for ( i = rank ; i < n ; i+=size ) {
 		for ( j = 0 ; j < n ; j++ ) {
 			s = 0;
@@ -49,6 +45,8 @@ void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 			C[i][j] = s;
 		}
 	}
+	
+	// partie envoi/réception de messages
 	if ( rank != 0 ) { // si un esclave finit le travail
 		for ( i = rank ; i < n ; i+=size )
 			// envoi de message au maitre
@@ -59,10 +57,11 @@ void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 				MPI_Recv(C[i], n, MPI_INT, j, i, MPI_COMM_WORLD, &status);
 		}
 	}
-	// Tout le monde se synchronise
+	// Tout le monde se synchronise pour terminer la fonction
 	MPI_Barrier(MPI_COMM_WORLD);
 }
 
+// Initialise la structure des matrices A, B, C
 void initializeMatrix(int** A, int** B, int** C, int n){
 	int i; // initialize all the matrices
 	for ( i = 0 ; i < n ; i++ ) {
@@ -85,21 +84,25 @@ int main(int argc, char** argv){
 	
 	// Booléen valant 0 si l'utilisateur ne veut 
 	// pas afficher la matrice, 1 sinon
-	int printMatrix = 0, c, n, index;
+	int printMatrix = 0;
+	
+	int c, n, index;
 	
 	int** A;
 	int** B;
 	int** C;
 
+	// Le maitre lit sur l'entrée standard les différentes informations
+	// nécessaires (n et matrices en entrée)
 	if ( rank == 0 ) {
 	
 		// détermine la valeur de p sur la ligne de commande
 		while ((c=getopt(argc,argv, "ph")) != -1 ){
 			switch(c) {
-				case 'p':
+				case 'p': // Si l'utilisateur veut afficher la matrice
 					printMatrix = 1;
 					break;
-				case 'h':
+				case 'h': // si l'utilisateur veut afficher l'aide
 					printHelp(argv[0]);
 					exit(0);
 					break;
@@ -108,6 +111,7 @@ int main(int argc, char** argv){
 			}
 		}
 		
+		// lit n
 		scanf("%d", &n);
 		
 		// lit les matrices A et B et construit C
@@ -120,24 +124,24 @@ int main(int argc, char** argv){
 		
 	}
 	
+	// Échange d'information pour n
 	MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
 	
 	if ( rank != 0 ){
+		// Pour les esclaves, les matrices ne sont pas initialisées
+		// et la valeur de n était requise, c'est pourquoi
+		// on initialise les matrices ici
 		A = (int**) malloc(sizeof(int*)*n);
 		B = (int**) malloc(sizeof(int*)*n);
 		C = (int**) malloc(sizeof(int*)*n);
 		initializeMatrix(A,B,C,n);
 	}
 	
+	// Échange d'information sur les matrices
 	for ( i = 0 ; i < n ; i++ ) {
 		MPI_Bcast(A[i], n, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Bcast(B[i], n, MPI_INT, 0, MPI_COMM_WORLD);
 	}
-	
-	//~ printf("rank:%d, n:%d\n", rank, n);
-	
-	//~ afficheMatrix(A, n);
-	//~ printf("\n");
 	
 	// Multiplication de la matrice
 	MPI_Barrier(MPI_COMM_WORLD);
@@ -166,6 +170,6 @@ int main(int argc, char** argv){
 	free(B);
 	free(C);
 		
-		
+	// Fin du programme
 	return 0;
 }
