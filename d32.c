@@ -26,6 +26,7 @@ void readMatrix(int** M, int n) {
 	}
 }
 
+
 //~ void multiplyMatrix(int** A, int** B, int** C, int n){
 	//~ int i,j,k,s;
 	//~ for ( i = 0 ; i < n ; i++ )
