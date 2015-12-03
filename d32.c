@@ -21,7 +21,6 @@ void afficheMatrix(int** M, int n) {
 void readMatrix(int** M, int n) {
 	int i,j;
 	for ( i = 0 ; i < n ; i++ ){
-		M[i] = (int*) malloc(n*sizeof(int));
 		for ( j = 0 ; j < n ; j++ )
 			scanf("%d", &(M[i][j]));
 	}
@@ -82,6 +81,12 @@ int main(int argc, char** argv){
 	int** A = (int**) malloc(sizeof(int*)*n);
 	int** B = (int**) malloc(sizeof(int*)*n);
 	int** C = (int**) malloc(sizeof(int*)*n);
+	for ( i = 0 ; i < n ; i++ ) {
+		A[i] = (int*) malloc(n*sizeof(int));
+		B[i] = (int*) malloc(n*sizeof(int));
+		C[i] = (int*) malloc(n*sizeof(int));
+	}
+	
 		
 	if ( rank == 0 ) {
 	
@@ -103,8 +108,6 @@ int main(int argc, char** argv){
 		scanf("%d", &n);
 		
 		// lit les matrices A et B et construit C
-		for ( i = 0 ; i < n ; i++ )
-			C[i] = (int*) malloc(n*sizeof(int));
 		readMatrix(A, n);
 		readMatrix(B, n);
 		
