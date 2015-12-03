@@ -61,8 +61,6 @@ void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 	}
 	// Tout le monde se synchronise
 	MPI_Barrier(MPI_COMM_WORLD);
-	
-	MPI_Finalize();
 }
 
 int main(int argc, char** argv){
@@ -110,6 +108,11 @@ int main(int argc, char** argv){
 	MPI_Barrier(MPI_COMM_WORLD);
 	if(rank == 0) t=MPI_Wtime();
 	multiplyMatrix(A, B, C, n, rank, size);
+	
+	// on a fini avec MPI
+	MPI_Finalize();
+	
+	// Affichage du temps d'exécution
 	if(rank == 0) {
 		t=MPI_Wtime()-t;
 		printf("Execution time : %lf\n", t);
