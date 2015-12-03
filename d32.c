@@ -97,7 +97,7 @@ void unpack_matrix(int **A, int **B, int* data, int n) {
 int main(int argc, char** argv){
 	
 	// initialisation de MPI
-	int size, rank;
+	int size, rank, i;
 	double t;
 	
 	MPI_Init(&argc, &argv);
@@ -134,7 +134,6 @@ int main(int argc, char** argv){
 		scanf("%d", &n);
 		
 		// lit les matrices A et B et construit C
-		int i;
 		for ( i = 0 ; i < n ; i++ )
 			C[i] = (int*) malloc(n*sizeof(int));
 		readMatrix(A, n);
