@@ -63,15 +63,15 @@ void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 	MPI_Barrier(MPI_COMM_WORLD);
 }
 
-void send_n(int n) {
+void send_n(int* n) {
 	MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
 }
 
-//~ void send_matrix(int **A, int **B, int n) {
-	//~ int* data = (int*) malloc(sizeof(int)*2*n*n);
+void send_matrix(int **A, int **B, int n) {
+	int* data = (int*) malloc(sizeof(int)*2*n*n);
 	
-	//~ free(data);
-//~ }
+	free(data);
+}
 
 
 int main(int argc, char** argv){
@@ -142,7 +142,7 @@ int main(int argc, char** argv){
 		
 	}
 	
-	send_n(n);
+	send_n(&n);
 	MPI_Barrier(MPI_COMM_WORLD);
 	printf("rank:%d, n:%d\n", rank, n);
 	
