@@ -64,10 +64,33 @@ void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 }
 
 
-void send_matrix(int **A, int **B, int n) {
-	int* data = (int*) malloc(sizeof(int)*2*n*n);
-	
-	free(data);
+void pack_matrix(int **A, int **B, int* data, int n) {
+	int c=0,i,j;
+	for ( i = 0 ; i < n ; i++ )
+		for ( j = 0 ; j < n ; j++ ) {
+			data[c] = A[i][j];
+			c++;
+		}
+	for ( i = 0 ; i < n ; i++ )
+		for ( j = 0 ; j < n ; j++ ) {
+			data[c] = B[i][j];
+			c++;
+		}
+		
+}
+
+void unpack_matrix(int **A, int **B, int* data, int n) {
+	int c=0,i,j;
+	for ( i = 0 ; i < n ; i++ )
+		for ( j = 0 ; j < n ; j++ ) {
+			A[i][j] = data[c];
+			c++;
+		}
+	for ( i = 0 ; i < n ; i++ )
+		for ( j = 0 ; j < n ; j++ ) {
+			B[i][j] = data[c];
+			c++;
+		}
 }
 
 
@@ -89,6 +112,8 @@ int main(int argc, char** argv){
 	int** B = (int**) malloc(sizeof(int*)*n);
 	int** C = (int**) malloc(sizeof(int*)*n);
 	
+	int mat_data = (int*) malloc(sizeof(int*)*n*n*2);
+	
 	if ( rank == 0 ) {
 	
 		// détermine la valeur de p sur la ligne de commande
@@ -108,15 +133,13 @@ int main(int argc, char** argv){
 		
 		scanf("%d", &n);
 		
-		//~ // lit les matrices A et B et construit C
-		//~ int i;
-		//~ for ( i = 0 ; i < n ; i++ )
-			//~ C[i] = (int*) malloc(n*sizeof(int));
-		//~ readMatrix(A, n);
-		//~ readMatrix(B, n);
-		
-		
-
+		// lit les matrices A et B et construit C
+		int i;
+		for ( i = 0 ; i < n ; i++ )
+			C[i] = (int*) malloc(n*sizeof(int));
+		readMatrix(A, n);
+		readMatrix(B, n);
+		pack_matrix(A, B, mat_data, n);
 		
 		//~ // Multiplication de la matrice
 		//~ MPI_Barrier(MPI_COMM_WORLD);
@@ -140,17 +163,28 @@ int main(int argc, char** argv){
 	}
 	
 	MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Bcast(mat_data, 2*n*n, MPI_INT, 0, MPI_COMM_WORLD);
 	printf("rank:%d, n:%d\n", rank, n);
 	
+	if ( rank != 0 ){
+		unpack_matrix(A,B,mat_data,n);
+	}
+	
+	afficheMatrix(A, n);
+	printf("\n");
+	
+	
 	// Libération de la mémoire
-	//~ for ( i = 0 ; i < n ; i++ ){
-		//~ free(A[i]);
-		//~ free(B[i]);
-		//~ free(C[i]);
-	//~ }
-	//~ free(A);
-	//~ free(B);
-	//~ free(C);
+	for ( i = 0 ; i < n ; i++ ){
+		free(A[i]);
+		free(B[i]);
+		free(C[i]);
+	}
+	free(A);
+	free(B);
+	free(C);
+	
+	free(mat_data);
 	
 	return 0;
 }
