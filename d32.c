@@ -134,30 +134,27 @@ int main(int argc, char** argv){
 		MPI_Bcast(B[i], n, MPI_INT, 0, MPI_COMM_WORLD);
 	}
 	
-	printf("rank:%d, n:%d\n", rank, n);
+	//~ printf("rank:%d, n:%d\n", rank, n);
 	
-	afficheMatrix(A, n);
-	printf("\n");
+	//~ afficheMatrix(A, n);
+	//~ printf("\n");
 	
+	// Multiplication de la matrice
+	MPI_Barrier(MPI_COMM_WORLD);
+	if(rank == 0) t=MPI_Wtime();
+	multiplyMatrix(A, B, C, n, rank, size);
 	
+	// on a fini avec MPI
+	MPI_Finalize();
 	
-	
-	//~ // Multiplication de la matrice
-	//~ MPI_Barrier(MPI_COMM_WORLD);
-	//~ if(rank == 0) t=MPI_Wtime();
-	//~ multiplyMatrix(A, B, C, n, rank, size);
-	
-	//~ // on a fini avec MPI
-	//~ MPI_Finalize();
-	
-	//~ // Affichage du temps d'exécution
-	//~ if(rank == 0) {
-		//~ t=MPI_Wtime()-t;
-		//~ printf("Execution time : %lf\n", t);
-	//~ }
+	// Affichage du temps d'exécution
+	if(rank == 0) {
+		t=MPI_Wtime()-t;
+		printf("Execution time : %lf\n", t);
+	}
 
-	//~ // affichage si demandé
-	//~ if ( printMatrix ) afficheMatrix(C, n);
+	// affichage si demandé
+	if ( printMatrix ) afficheMatrix(C, n);
 	
 	// Libération de la mémoire
 	for ( i = 0 ; i < n ; i++ ){
