@@ -72,7 +72,6 @@ void initializeMatrix(int** A, int** B, int** C, int n){
 	}
 }
 
-
 int main(int argc, char** argv){
 	
 	// initialisation de MPI
