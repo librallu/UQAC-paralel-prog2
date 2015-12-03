@@ -111,9 +111,6 @@ int main(int argc, char** argv){
 		
 		scanf("%d", &n);
 		
-		
-		send_n(n);
-		
 		//~ // lit les matrices A et B et construit C
 		//~ int i;
 		//~ for ( i = 0 ; i < n ; i++ )
@@ -145,6 +142,7 @@ int main(int argc, char** argv){
 		
 	}
 	
+	send_n(n);
 	MPI_Barrier(MPI_COMM_WORLD);
 	printf("rank:%d, n:%d\n", rank, n);
 	
