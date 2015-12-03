@@ -123,6 +123,8 @@ int main(int argc, char** argv){
 	printf("\n");
 	
 	
+	
+	
 	//~ // Multiplication de la matrice
 	//~ MPI_Barrier(MPI_COMM_WORLD);
 	//~ if(rank == 0) t=MPI_Wtime();
