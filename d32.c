@@ -62,6 +62,17 @@ void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 	MPI_Barrier(MPI_COMM_WORLD);
 }
 
+void initializeMatrix(int** A, int** B, int** C, int n){
+	A = (int**) malloc(sizeof(int*)*n);
+	B = (int**) malloc(sizeof(int*)*n);
+	C = (int**) malloc(sizeof(int*)*n);
+	for ( i = 0 ; i < n ; i++ ) {
+		A[i] = (int*) malloc(n*sizeof(int));
+		B[i] = (int*) malloc(n*sizeof(int));
+		C[i] = (int*) malloc(n*sizeof(int));
+	}
+}
+
 
 int main(int argc, char** argv){
 	
@@ -78,16 +89,10 @@ int main(int argc, char** argv){
 	// pas afficher la matrice, 1 sinon
 	int printMatrix = 0, c, n, index;
 	
-	int** A = (int**) malloc(sizeof(int*)*n);
-	int** B = (int**) malloc(sizeof(int*)*n);
-	int** C = (int**) malloc(sizeof(int*)*n);
-	for ( i = 0 ; i < n ; i++ ) {
-		A[i] = (int*) malloc(n*sizeof(int));
-		B[i] = (int*) malloc(n*sizeof(int));
-		C[i] = (int*) malloc(n*sizeof(int));
-	}
-	
-		
+	int** A;
+	int** B;
+	int** C;
+
 	if ( rank == 0 ) {
 	
 		// détermine la valeur de p sur la ligne de commande
@@ -108,12 +113,17 @@ int main(int argc, char** argv){
 		scanf("%d", &n);
 		
 		// lit les matrices A et B et construit C
+		initializeMatrix(A,B,C,n);
 		readMatrix(A, n);
 		readMatrix(B, n);
 		
 	}
 	
 	MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	
+	if ( rank != 0 ){
+		initializeMatrix(A,B,C,n);
+	}
 	
 	for ( i = 0 ; i < n ; i++ ) {
 		MPI_Bcast(A[i], n, MPI_INT, 0, MPI_COMM_WORLD);
