@@ -64,6 +64,7 @@ void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 }
 
 void initializeMatrix(int** A, int** B, int** C, int n){
+	int i;
 	A = (int**) malloc(sizeof(int*)*n);
 	B = (int**) malloc(sizeof(int*)*n);
 	C = (int**) malloc(sizeof(int*)*n);
