@@ -112,7 +112,7 @@ int main(int argc, char** argv){
 	int** B = (int**) malloc(sizeof(int*)*n);
 	int** C = (int**) malloc(sizeof(int*)*n);
 	
-	int mat_data = (int*) malloc(sizeof(int*)*n*n*2);
+	int* mat_data = (int*) malloc(sizeof(int*)*n*n*2);
 	
 	if ( rank == 0 ) {
 	
@@ -141,23 +141,6 @@ int main(int argc, char** argv){
 		readMatrix(B, n);
 		pack_matrix(A, B, mat_data, n);
 		
-		//~ // Multiplication de la matrice
-		//~ MPI_Barrier(MPI_COMM_WORLD);
-		//~ if(rank == 0) t=MPI_Wtime();
-		//~ multiplyMatrix(A, B, C, n, rank, size);
-		
-		//~ // on a fini avec MPI
-		//~ MPI_Finalize();
-		
-		//~ // Affichage du temps d'exécution
-		//~ if(rank == 0) {
-			//~ t=MPI_Wtime()-t;
-			//~ printf("Execution time : %lf\n", t);
-		//~ }
-
-		//~ // affichage si demandé
-		//~ if ( printMatrix ) afficheMatrix(C, n);
-		
 	} else { // Si il s'agit d'un noeud différent de 0
 		
 	}
@@ -173,6 +156,23 @@ int main(int argc, char** argv){
 	afficheMatrix(A, n);
 	printf("\n");
 	
+	
+	//~ // Multiplication de la matrice
+	//~ MPI_Barrier(MPI_COMM_WORLD);
+	//~ if(rank == 0) t=MPI_Wtime();
+	//~ multiplyMatrix(A, B, C, n, rank, size);
+	
+	//~ // on a fini avec MPI
+	//~ MPI_Finalize();
+	
+	//~ // Affichage du temps d'exécution
+	//~ if(rank == 0) {
+		//~ t=MPI_Wtime()-t;
+		//~ printf("Execution time : %lf\n", t);
+	//~ }
+
+	//~ // affichage si demandé
+	//~ if ( printMatrix ) afficheMatrix(C, n);
 	
 	// Libération de la mémoire
 	for ( i = 0 ; i < n ; i++ ){
