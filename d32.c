@@ -65,9 +65,6 @@ void multiplyMatrix(int** A, int** B, int** C, int n, int rank, int size){
 
 void initializeMatrix(int** A, int** B, int** C, int n){
 	int i; // initialize all the matrices
-	A = (int**) malloc(sizeof(int*)*n);
-	B = (int**) malloc(sizeof(int*)*n);
-	C = (int**) malloc(sizeof(int*)*n);
 	for ( i = 0 ; i < n ; i++ ) {
 		A[i] = (int*) malloc(n*sizeof(int));
 		B[i] = (int*) malloc(n*sizeof(int));
@@ -115,6 +112,9 @@ int main(int argc, char** argv){
 		scanf("%d", &n);
 		
 		// lit les matrices A et B et construit C
+		A = (int**) malloc(sizeof(int*)*n);
+		B = (int**) malloc(sizeof(int*)*n);
+		C = (int**) malloc(sizeof(int*)*n);
 		initializeMatrix(A,B,C,n);
 		readMatrix(A, n);
 		readMatrix(B, n);
@@ -124,6 +124,9 @@ int main(int argc, char** argv){
 	MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
 	
 	if ( rank != 0 ){
+		A = (int**) malloc(sizeof(int*)*n);
+		B = (int**) malloc(sizeof(int*)*n);
+		C = (int**) malloc(sizeof(int*)*n);
 		initializeMatrix(A,B,C,n);
 	}
 	
