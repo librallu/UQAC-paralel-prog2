@@ -14,28 +14,37 @@ int main(int argc, char** argv){
             return 1;
     }
 	
-	FILE* f = fopen(argv[1], "r");
-	fscanf(f, "%d", &n);
-	grid = (int*) malloc(sizeof(int)*n*n*n*n);
-	for ( i = 0 ; i < n*n*n*n ; i++ ) fscanf(f, "%d", &(grid[i]));
-	fclose(f);
-	
-	
 	// initialisation de MPI
 	int size, rank;
 	double t;
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	MPI_Barrier(MPI_COMM_WORLD); //attente de la connection de tous les noeuds du communicator
 	
 	if(rank == 0){
-		display(grid, n);
 		// code master
-	} else {
+		FILE* f = fopen(argv[1], "r");
+		fscanf(f, "%d", &n);
+		grid = (int*) malloc(sizeof(int)*n*n*n*n);
+		for ( i = 0 ; i < n*n*n*n ; i++ ) fscanf(f, "%d", &(grid[i]));
+		fclose(f);
+		display(grid, n);
+		
+	} 
+	
+	//broadcast size of grid
+	MPI_Bcast(&n,1,MPI_INT,0,MPI_COMM_WORLD);
+	
+	
+	if(rank != 0){
 		// code node
+		grid = (int*) malloc(sizeof(int)*n*n*n*n);
 	}
 	
+	//broadcast actual grid
+	MPI_Bcast(grid,n*n*n*n,MPI_INT,0,MPI_COMM_WORLD);
+	
+	MPI_Barrier(MPI_COMM_WORLD);
 	// on a fini avec MPI
 	MPI_Finalize();
 	
