@@ -58,8 +58,11 @@ int backtrack(int* grid, int** possibles, int n){
 }
 
 
-int main(int argc, char* argv[]){
 
+
+
+int main(int argc, char* argv[]){
+	
 	int *grid;
 	int n,i,j;
 	if (argc < 2) {
@@ -81,7 +84,7 @@ int main(int argc, char* argv[]){
 	//~ display(grid, n);
 	//~ printf("------\n");
 	
-	backtrack(grid, possibles, n);
+	bfs(grid, possibles, n, );
 	
 	if ( !sudoku_verification(grid, n) ) 
 		printf("incorrect\n");
@@ -97,10 +100,4 @@ int main(int argc, char* argv[]){
 			free(possibles[n*n*i+j]);
 	free(possibles);
 	free(grid);
-
 }
-
-
-
-
-

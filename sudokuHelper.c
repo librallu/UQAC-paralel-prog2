@@ -1,5 +1,9 @@
 #include "sudokuHelper.h"
 
+void copy_grid(int* dest, int* start, int n) {
+	int i,j;
+	for ( i = 0 ; i < n*n*n*n ; i++ ) dest[i] = start[i];
+}
 
 /**
  * get possible values for a given case in grid.
@@ -141,10 +145,27 @@ int cube_single_possibility(int* grid, int** possibles, int n, int a, int b) {
 
 
 
-// simplify problem in a simple go
-// returns the number of values updated
-// should be called multiple times until it returns 0.
-int simplify(int* grid, int n, int** possibles) {
+// return 1 if error
+// return -1 if terminated
+// else return 0
+int to_continue(int* grid, int** possibles, int n) {
+	int a,b,end=-1, tmp;
+	for ( a = 0 ; a < n*n ; a++ )
+		for ( b = 0 ; b < n*n ; b++ )
+			if ( !grid[a*n*n+b] ) {
+				end = 0;
+				tmp = compute_nb_possibles(possibles[a*n*n+b],n);
+				if ( !tmp ) {
+					//~ printf("error position: %d, %d\n",a,b);
+					return 1;
+				}
+			}
+	return end;
+}
+
+
+
+int simplify_hill(int* grid, int n, int** possibles) {
 	int i,j,k, changed = 0;
 	// check if there is a single value for a single position
 	for ( i = 0 ; i < n*n ; i++ )
@@ -156,7 +177,7 @@ int simplify(int* grid, int n, int** possibles) {
 							grid[i*n*n+j] = k;
 							changed++;
 							break;
-						}		
+						}
 				}
 	
 	// Apply heuristics of second kind
@@ -165,7 +186,76 @@ int simplify(int* grid, int n, int** possibles) {
 		changed += column_single_possibility(grid, possibles, n, i);
 		changed += cube_single_possibility(grid, possibles, n, i/n, i%n);
 	}
+	
 	return changed;
+}
+
+/**
+ * use a hill climbing heuristic for sudoku.
+ * May return the sudoku completed very fast, but
+ * can also non modify the grid.
+ * Return 1 if the grid is complete, 0 elsewhere
+ */
+//~ int hillClimbing(int* grid, int n, int** possibles){
+	//~ int a,b,k=1,cont=1, cont2 ,i,j, nbPossibles;
+	
+	//~ cont = to_continue(grid, possibles, n);
+	//~ if ( cont ) return 0; // problem already solved
+	
+	//~ // create a backup for the grid
+	//~ int* grid_backup = (int*) malloc(sizeof(int)*n*n*n*n);
+	//~ copy_grid(grid_backup, grid, n); // grid_backup <- grid
+	
+	//~ printf("in\n");
+	//~ while (!cont) {
+		//~ // affect a value
+		//~ nbPossibles = choose_backtracking(grid, possibles, n, &a, &b);
+		//~ cont2 = 1;
+		//~ while(cont2) {
+			//~ k = (k+1)%(n*n+1);
+			//~ printf("%d\t%d\t%d\n",k, nbPossibles, rand()%9);
+			//~ if ( k > 0 && possibles[a*n*n+b][k] && rand()%9 < nbPossibles ) {
+				//~ printf("(%d,%d) %d\n",a,b,k);
+				//~ grid[a*n*n+b] = k;
+				//~ cont2 = 0;
+			//~ }
+		//~ }
+		
+		//~ // simplify grid
+		//~ while (simplify_hill(grid, n, possibles));
+		//~ simplify_all(grid, n, possibles);
+		//~ display(grid,n);
+		
+		//~ // check condition for next iteration
+		//~ cont = cont=to_continue(grid, possibles, n);
+	
+	//~ }
+	//~ printf("out\n");
+		
+	//~ if ( cont != -1 ) { // no solution found
+		//~ // restore original problem
+		//~ copy_grid(grid, grid_backup, n);
+		//~ free(grid_backup);
+		//~ // restore possibles grid
+		//~ for ( i = 0 ; i < n*n ; i++ )
+			//~ for ( j = 0 ; j < n*n ; j++ )
+				//~ if ( grid[i*n*n+j] == 0 )
+					//~ get_possible_values(i,j,n,grid,possibles[i*n*n+j]);
+		//~ return 0;
+	//~ } else { // solution found
+		//~ printf("Yeah\n");
+		//~ free(grid_backup);
+		//~ return 1;
+	//~ }
+//~ }
+
+
+// simplify problem in a simple go
+// returns the number of values updated
+// should be called multiple times until it returns 0.
+int simplify(int* grid, int n, int** possibles) {
+	simplify_hill(grid, n, possibles);
+	//~ hillClimbing(grid, n, possibles);
 }
 
 // takes a grid and a possible values table to be completed and simplify it as
@@ -215,7 +305,7 @@ int sudoku_verification(int* grid, int n) {
 			if ( ++tab[grid[i*n*n+j]] == 2) return 0;
 		}
 	}
-		
+
 	// line verification
 	for ( j = 0 ; j < n*n ; j++ ) {
 		for ( i = 1 ; i <= n*n ; i++ ) tab[i] = 0;
@@ -223,12 +313,12 @@ int sudoku_verification(int* grid, int n) {
 			if ( ++tab[grid[i*n*n+j]] == 2) return 0;
 		}
 	}
-		
+
 	// block verification
 	for ( a = 0 ; a < n ; a++ ) {
 		for ( b = 0 ; b < n ; b++ ) {
 			for ( i = 1 ; i <= n*n ; i++ ) tab[i] = 0;
-			if ( ++tab[grid[(a*n+i/n)*n*n+(b*n+i%n)]] == 2 ) return 0;
+			if ( ++tab[grid[(a*n+i/n)*n+(b*n+i%n)]] == 2 ) return 0;
 		}
 	}
 	
