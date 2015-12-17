@@ -8,8 +8,6 @@ int backtrack(int* grid, int** possibles, int n){
 	
 	// starting by simplifying the grid
 	simplify_all(grid, n, possibles);
-	//~ display(grid, n);
-	//~ printf("----\n");
 	
 	int cont = to_continue(grid, possibles, n);
 	if ( cont == 1 ) { // we have got an error
@@ -31,11 +29,7 @@ int backtrack(int* grid, int** possibles, int n){
 			
 			// affect k to the position
 			grid[a*n*n+b] = k;
-			//~ printf("chosen position: %d,%d\n",a,b);
-			//~ printf("we choose %d \n", k);
-			//~ display(grid, n);
-			//~ printf("----\n");
-			
+
 			// call the backtrack operation
 			// if we found the solution
 			if ( backtrack(grid, possibles, n) ) {
@@ -45,9 +39,7 @@ int backtrack(int* grid, int** possibles, int n){
 			
 			// if not correct, restore the grid
 			copy_grid(grid, grid_backup, n); // grid <- grid_backup
-			//~ printf("restoring grid\n");
-			//~ display(grid,n);
-			//~ printf("====\n");
+
 		}
 	}
 		
@@ -57,8 +49,74 @@ int backtrack(int* grid, int** possibles, int n){
 
 }
 
-
-
+/**
+ * 
+ * return 1 if solved, -1 if error, 0 elsewhere
+ */
+int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, int* start){
+	
+	// grids initialization
+	int i,a,b,k,nbPossibles;
+	for ( i = 0 ; i < nmax ; i++ )
+		grids[i] = (int*) malloc(sizeof(int)*n*n*n*n);
+	
+	// enqueue the grid
+	copy_grid(grids[0], grid, n);
+	int queueStart = 0;
+	int queueSize = 1;
+	
+	int* currentGrid;
+	int stop = 0;
+	while ( queueSize != 0 && !stop ) {
+		// dequeue the grid
+		currentGrid = grids[queueStart];
+		
+		//~ display(currentGrid,n);
+		//~ printf(" - - - \n");
+		
+		// starting by simplifying the grid
+		simplify_all(currentGrid, n, possibles);
+		
+		//~ printf("--- %d --- \n", queueStart);
+		//~ display(currentGrid,n);
+		//~ printf("---\n");
+		
+		int cont = to_continue(currentGrid, possibles, n);
+		if ( cont == -1 ) { // we solved it
+			copy_grid(grid, currentGrid, n);
+			return 1;
+		} else if ( cont == 1 ) { // invalid grid
+			queueSize = queueSize-1;
+			queueStart = (queueStart+1)%nmax;
+		} else if ( cont == 0 ) {
+			// choose a position for backtracking
+			nbPossibles = choose_backtracking(currentGrid, possibles, n, &a, &b);
+			//~ printf("nbPossibles : %d (%d,%d)\n", nbPossibles,a,b);
+			if ( nbPossibles + queueSize > nmax ) {
+				stop = 1;
+				*nbGrids = queueSize;
+				*start = queueStart;
+			} else {
+				for ( k = 1 ; k <= n*n ; k++ ) {
+					if ( possibles[a*n*n+b][k] ) { // if k is possible
+						//~ printf("using k %d\n",k);
+						// copy a new grid
+						copy_grid(grids[(queueStart+queueSize)%nmax], currentGrid, n);
+						grids[(queueStart+queueSize)%nmax][a*n*n+b] = k;
+						queueSize++;
+					}
+				}
+				queueSize--;
+				queueStart = (queueStart+1)%nmax;
+			}
+		}
+		//~ printf("====\n");
+	}
+	
+	if ( queueSize == 0 ) return -1;
+	return 0;
+	
+}
 
 
 int main(int argc, char* argv[]){
@@ -83,13 +141,32 @@ int main(int argc, char* argv[]){
 	//~ printf("Number of possible values: %d\n", get_possible_values(0,0,n,grid,res));
 	//~ display(grid, n);
 	//~ printf("------\n");
-	
-	bfs(grid, possibles, n, );
-	
-	if ( !sudoku_verification(grid, n) ) 
-		printf("incorrect\n");
-	else
+		
+	int nmax = n*n*2;
+	int ** grids = (int**) malloc(sizeof(int*)*nmax);;
+	int nbGrids, start=0;
+	int res = bfs(grid, possibles, n, nmax, grids, &nbGrids, &start);
+	printf("res:%d\n",res);
+	if ( res == 1 ) {
 		display(grid, n);
+	} else if ( res == -1 ) {
+		printf("no solution\n");
+	} else {
+		printf("nb noeuds :%d starting at %d\n",nbGrids, start);
+		for ( i = 0 ; i < nbGrids ; i++ ) {
+			printf(" --- %d --- \n", start+i);
+			display(grids[start+i],n);
+		}
+	}
+	for ( i = 0 ; i < nmax ; i++ ) {
+		free(grids[i]);
+	}
+	free(grids);
+	
+	//~ if ( !sudoku_verification(grid, n) ) 
+		//~ printf("incorrect\n");
+	//~ else
+		//~ display(grid, n);
 	
 	
 	//~ printf("------\n");
