@@ -477,6 +477,7 @@ int main(int argc, char** argv){
 		grid = malloc(sizeof(int)*n*n*n*n);
 	}
 	
+
 	//~ printf("rank1:%d\n",rank);
 	
 	for ( i = 0 ; i < n*n ; i++ )
