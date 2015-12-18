@@ -122,7 +122,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 int main(int argc, char* argv[]){
 	
 	int *grid;
-	int n,i,j;
+		
 	if (argc < 2) {
 		printf("usage: %s filename\n", argv[0]);
 		return 1;
@@ -142,9 +142,9 @@ int main(int argc, char* argv[]){
 	//~ display(grid, n);
 	//~ printf("------\n");
 		
-	int nmax = n*n*2;
-	int ** grids = (int**) malloc(sizeof(int*)*nmax);;
-	int nbGrids, start=0;
+	int nmax = 2*n*n;
+	int ** grids = (int**) malloc(sizeof(int*)*nmax);
+	int nbGrids, start=0, currentMachine=0;
 	int res = bfs(grid, possibles, n, nmax, grids, &nbGrids, &start);
 	printf("res:%d\n",res);
 	if ( res == 1 ) {
@@ -154,22 +154,20 @@ int main(int argc, char* argv[]){
 	} else {
 		printf("nb noeuds :%d starting at %d\n",nbGrids, start);
 		for ( i = 0 ; i < nbGrids ; i++ ) {
-			printf(" --- %d --- \n", start+i);
-			display(grids[start+i],n);
+			printf(" --- %d --- \n", (start+i)%nmax);
+			display(grids[(start+i)%nmax],n);
 		}
 	}
+	
+	// explore grids for current machine
+	
+	
+	// free list of grids
 	for ( i = 0 ; i < nmax ; i++ ) {
 		free(grids[i]);
 	}
 	free(grids);
 	
-	//~ if ( !sudoku_verification(grid, n) ) 
-		//~ printf("incorrect\n");
-	//~ else
-		//~ display(grid, n);
-	
-	
-	//~ printf("------\n");
 	
 	
 	for ( i = 0 ; i < n*n ; i++ )

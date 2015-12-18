@@ -49,6 +49,6 @@ int to_continue(int* grid, int** possibles, int n);
 /**
  * returns 1 if grid is correct, 0 elsewhere
  */
-int sudoku_verification(int* grid, int n); // pas encore utilisée
+int sudoku_verification(int* grid, int n);
 
 #endif
