@@ -458,7 +458,7 @@ int main(int argc, char** argv){
 		} else {
 			printf("nb noeuds :%d starting at %d\n",nbGrids, start);
 			for ( i = 0 ; i < nbGrids ; i++ ) {
-				//~ printf(" --- %d --- \n", (start+i)%nmax);
+				printf(" --- %d --- \n", (start+i)%nmax);
 				//~ display(grids[(start+i)%nmax],n);
 				
 				// send grids to desired nodes
