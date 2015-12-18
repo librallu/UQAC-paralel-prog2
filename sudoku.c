@@ -477,7 +477,6 @@ int main(int argc, char** argv){
 		
 	}
 	
-	
 	printf("rank1:%d\n",rank);
 	
 	for ( i = 0 ; i < n*n ; i++ )
