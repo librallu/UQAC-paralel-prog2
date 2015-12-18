@@ -342,6 +342,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 	int queueStart = 0;
 	int queueSize = 1;
 	
+
 	int* currentGrid;
 	int stop = 0;
 	while ( queueSize != 0 && !stop ) {
