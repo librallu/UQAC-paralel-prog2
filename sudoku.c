@@ -335,7 +335,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 	int i,a,b,k,nbPossibles;
 	for ( i = 0 ; i < nmax ; i++ )
 		grids[i] = (int*) malloc(sizeof(int)*n*n*n*n);
-	printf("end init grids\n");
+	//~ printf("end init grids\n");
 	
 	// enqueue the grid
 	copy_grid(grids[0], grid, n);
@@ -346,10 +346,11 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 	int stop = 0;
 	while ( queueSize != 0 && !stop ) {
 		// dequeue the grid
+		printf("dequeue\n");
 		currentGrid = grids[queueStart];
 		
-		//~ display(currentGrid,n);
-		//~ printf(" - - - \n");
+		display(currentGrid,n);
+		printf(" - - - \n");
 		
 		// starting by simplifying the grid
 		simplify_all(currentGrid, n, possibles);
