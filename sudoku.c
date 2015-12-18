@@ -442,6 +442,7 @@ int main(int argc, char** argv){
 	printf("end broadcasting n\n");
 	
 	
+
 	if ( rank == 0 ){ // if master thread
 		// generate matrix list
 		grids = (int**) malloc(sizeof(int*)*nmax);
