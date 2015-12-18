@@ -407,7 +407,7 @@ int main(int argc, char** argv){
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	printf("rank:%d\n",rank);
+	//~ printf("rank:%d\n",rank);
 	int *grid;
 	int n,i,j;
 	FILE* f;
@@ -429,7 +429,7 @@ int main(int argc, char** argv){
 	}
 	
 	
-	printf("end reading file\n");
+	//~ printf("end reading file\n");
 	
 	//broadcast size of grid
 	MPI_Bcast(&n,1,MPI_INT,0,MPI_COMM_WORLD);
@@ -441,11 +441,11 @@ int main(int argc, char** argv){
 			possibles[n*n*i+j] = (int*) malloc(sizeof(int)*n*n);
 	
 	
-	printf("end of possibles initialization\n");
+	//~ printf("end of possibles initialization\n");
 	int nmax = 2*n*n;
 	int** grids;
 	int nbGrids, start, res, currentNode = 0;
-	printf("end broadcasting n\n");
+	//~ printf("end broadcasting n\n");
 	
 	
 
