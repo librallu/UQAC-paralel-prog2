@@ -439,10 +439,10 @@ int main(int argc, char** argv){
 		printf("res:%d\n",res);
 		if ( res == 1 ) {
 			display(grid, n);
-			MPI_Abort(MPI_Comm comm, 0);
+			MPI_Abort(MPI_COMM_WORLD, 0);
 		} else if ( res == -1 ) {
 			printf("No solution\n");
-			MPI_Abort(MPI_Comm comm, 0);
+			MPI_Abort(MPI_COMM_WORLD, 0);
 		} else {
 			printf("nb noeuds :%d starting at %d\n",nbGrids, start);
 			for ( i = 0 ; i < nbGrids ; i++ ) {
