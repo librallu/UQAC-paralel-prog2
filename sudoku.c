@@ -445,6 +445,7 @@ int main(int argc, char** argv){
 	int nmax = 2*n*n;
 	int** grids;
 	int nbGrids, start, res, currentNode = 0;
+	int nbMessagesPerNode = (int*) calloc(sizeof(int)*size);
 	//~ printf("end broadcasting n\n");
 	
 	
@@ -469,9 +470,15 @@ int main(int argc, char** argv){
 				//~ printf("current:%d, size:%d, rank:%d\n", currentNode, size, rank);
 				if ( ((start+i)%nmax)%size != rank ) {
 					currentNode = ((start+i)%nmax)%size;
+					nbMessagesPerNode[currentNode]++;
 					printf("sending to %d grid %d\n", currentNode, (start+i)%nmax);
 				}				
 			}
+			for ( i = 1 ; i < size ; i++ ) {
+				printf("there is %d items for node %d\n", nbMessagesPerNode[i], i);
+			}
+			
+			printf("Master starts working\n");
 		}
 	} else { // if worker thread, wait for messages 
 		grid = malloc(sizeof(int)*n*n*n*n);
@@ -485,6 +492,7 @@ int main(int argc, char** argv){
 			free(possibles[n*n*i+j]);
 	free(possibles);
 	free(grid);
+	free(nbMessagesPerNode);
 	
 	//~ printf("rank2:%d\n",rank);
 	
