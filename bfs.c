@@ -144,7 +144,7 @@ int main(int argc, char* argv[]){
 		
 	int nmax = 2*n*n;
 	int ** grids = (int**) malloc(sizeof(int*)*nmax);
-	int nbGrids, start=0, currentMachine=0;
+	int nbGrids, start=0;
 	int res = bfs(grid, possibles, n, nmax, grids, &nbGrids, &start);
 	printf("res:%d\n",res);
 	if ( res == 1 ) {
@@ -158,11 +158,6 @@ int main(int argc, char* argv[]){
 			display(grids[(start+i)%nmax],n);
 		}
 	}
-	
-	// explore grids for current machine
-	
-	
-	// free list of grids
 	for ( i = 0 ; i < nmax ; i++ ) {
 		free(grids[i]);
 	}

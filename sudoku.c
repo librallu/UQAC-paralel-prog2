@@ -407,6 +407,11 @@ int main(int argc, char** argv){
 	int n,i,j;
 	FILE* f;
 	
+	int** possibles = (int**) malloc(sizeof(int*)*n*n*n*n);
+	for ( i = 0 ; i < n*n ; i++ )
+		for ( j = 0 ; j < n*n ; j++ )
+			possibles[n*n*i+j] = (int*) malloc(sizeof(int)*n*n);
+	
 	// For master, read the problem
 	if ( rank == 0 ) { // if master thread
 		
@@ -419,8 +424,6 @@ int main(int argc, char** argv){
 		grid = malloc(sizeof(int)*n*n*n*n);
 		for ( i = 0 ; i < n*n*n*n ; i++ ) fscanf(f, "%d", &(grid[i]));
 		fclose(f);
-		
-		
 	}
 	
 	//broadcast size of grid
@@ -455,6 +458,12 @@ int main(int argc, char** argv){
 			}
 		}
 	}
+	
+	for ( i = 0 ; i < n*n ; i++ )
+		for ( j = 0 ; j < n*n ; j++ )
+			free(possibles[n*n*i+j]);
+	free(possibles);
+	free(grid);
 	
 	
 }
