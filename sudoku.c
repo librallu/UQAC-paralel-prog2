@@ -462,6 +462,7 @@ int main(int argc, char** argv){
 				//~ display(grids[(start+i)%nmax],n);
 				currentNode = (start+i)%nmax;
 				// send grids to desired nodes
+				printf("current:%d, size:%d, rank:%d\n", currentNode, size, rank);
 				if ( currentNode%size != rank ) {
 					printf("sending to %d grid %d\n", currentNode, (start+i)%nmax);
 				}				
