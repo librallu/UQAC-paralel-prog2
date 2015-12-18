@@ -460,13 +460,11 @@ int main(int argc, char** argv){
 			for ( i = 0 ; i < nbGrids ; i++ ) {
 				printf(" --- %d --- \n", (start+i)%nmax);
 				//~ display(grids[(start+i)%nmax],n);
-				
+				currentNode = (start+i)%nmax;
 				// send grids to desired nodes
-				if ( currentNode != rank ) {
+				if ( currentNode%size != rank ) {
 					printf("sending to %d grid %d\n", currentNode, (start+i)%nmax);
-				}
-				currentNode = (currentNode+1)%size;
-				
+				}				
 			}
 		}
 	}
