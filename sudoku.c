@@ -485,5 +485,7 @@ int main(int argc, char** argv){
 	free(grid);
 	
 	MPI_Finalize();
+	
+	return 0;
 
 }
