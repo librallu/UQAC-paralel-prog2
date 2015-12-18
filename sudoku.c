@@ -478,11 +478,15 @@ int main(int argc, char** argv){
 	}
 	
 	
+	printf("rank1:%d\n",rank);
+	
 	for ( i = 0 ; i < n*n ; i++ )
 		for ( j = 0 ; j < n*n ; j++ )
 			free(possibles[n*n*i+j]);
 	free(possibles);
 	free(grid);
+	
+	printf("rank2:%d\n",rank);
 	
 	MPI_Finalize();
 	
