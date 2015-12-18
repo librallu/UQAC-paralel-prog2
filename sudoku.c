@@ -465,10 +465,10 @@ int main(int argc, char** argv){
 			for ( i = 0 ; i < nbGrids ; i++ ) {
 				//~ printf(" --- %d --- \n", (start+i)%nmax);
 				//~ display(grids[(start+i)%nmax],n);
-				currentNode = (start+i)%nmax;
 				// send grids to desired nodes
 				//~ printf("current:%d, size:%d, rank:%d\n", currentNode, size, rank);
-				if ( currentNode%size != rank ) {
+				if ( ((start+i)%nmax)%size != rank ) {
+					currentNode = ((start+i)%nmax)%size;
 					printf("sending to %d grid %d\n", currentNode, (start+i)%nmax);
 				}				
 			}
@@ -477,7 +477,7 @@ int main(int argc, char** argv){
 		grid = malloc(sizeof(int)*n*n*n*n);
 	}
 	
-	printf("rank1:%d\n",rank);
+	//~ printf("rank1:%d\n",rank);
 	
 	for ( i = 0 ; i < n*n ; i++ )
 		for ( j = 0 ; j < n*n ; j++ )
@@ -485,7 +485,7 @@ int main(int argc, char** argv){
 	free(possibles);
 	free(grid);
 	
-	printf("rank2:%d\n",rank);
+	//~ printf("rank2:%d\n",rank);
 	
 	MPI_Finalize();
 	
