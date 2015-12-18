@@ -474,7 +474,7 @@ int main(int argc, char** argv){
 			}
 		}
 	} else { // if worker thread, wait for messages 
-		
+		grid = malloc(sizeof(int)*n*n*n*n);
 	}
 	
 	printf("rank1:%d\n",rank);
