@@ -330,6 +330,7 @@ int sudoku_verification(int* grid, int n) {
  */
 int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, int* start){
 	
+	printf("start bfs\n");
 	// grids initialization
 	int i,a,b,k,nbPossibles;
 	for ( i = 0 ; i < nmax ; i++ )
