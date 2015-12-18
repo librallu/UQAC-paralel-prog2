@@ -445,7 +445,7 @@ int main(int argc, char** argv){
 	int nmax = 2*n*n;
 	int** grids;
 	int nbGrids, start, res, currentNode = 0;
-	int nbMessagesPerNode = (int*) calloc(sizeof(int)*size);
+	int nbMessagesPerNode = (int*) calloc(size,sizeof(int));
 	//~ printf("end broadcasting n\n");
 	
 	
