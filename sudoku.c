@@ -407,10 +407,12 @@ int main(int argc, char** argv){
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	
+	printf("rank:%d\n",rank);
 	int *grid;
 	int n,i,j;
 	FILE* f;
+	
+	
 	
 	// For master, read the problem
 	if ( rank == 0 ) { // if master thread
@@ -425,6 +427,8 @@ int main(int argc, char** argv){
 		for ( i = 0 ; i < n*n*n*n ; i++ ) fscanf(f, "%d", &(grid[i]));
 		fclose(f);
 	}
+	
+	
 	printf("end reading file\n");
 	
 	//broadcast size of grid
@@ -435,7 +439,8 @@ int main(int argc, char** argv){
 	for ( i = 0 ; i < n*n ; i++ )
 		for ( j = 0 ; j < n*n ; j++ )
 			possibles[n*n*i+j] = (int*) malloc(sizeof(int)*n*n);
-			
+	
+	
 	printf("end of possibles initialization\n");
 	int nmax = 2*n*n;
 	int** grids;
@@ -445,7 +450,7 @@ int main(int argc, char** argv){
 	
 
 	if ( rank == 0 ){ // if master thread
-		// generate matrix list
+		// generate matrix list and sending info to workers
 		grids = (int**) malloc(sizeof(int*)*nmax);
 		res = bfs(grid, possibles, n, nmax, grids, &nbGrids, &start);
 		printf("res:%d\n",res);
@@ -458,16 +463,18 @@ int main(int argc, char** argv){
 		} else {
 			printf("nb noeuds :%d starting at %d\n",nbGrids, start);
 			for ( i = 0 ; i < nbGrids ; i++ ) {
-				printf(" --- %d --- \n", (start+i)%nmax);
+				//~ printf(" --- %d --- \n", (start+i)%nmax);
 				//~ display(grids[(start+i)%nmax],n);
 				currentNode = (start+i)%nmax;
 				// send grids to desired nodes
-				printf("current:%d, size:%d, rank:%d\n", currentNode, size, rank);
+				//~ printf("current:%d, size:%d, rank:%d\n", currentNode, size, rank);
 				if ( currentNode%size != rank ) {
 					printf("sending to %d grid %d\n", currentNode, (start+i)%nmax);
 				}				
 			}
 		}
+	} else { // if worker thread, wait for messages 
+		
 	}
 	
 	
