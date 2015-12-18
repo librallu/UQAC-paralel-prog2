@@ -122,6 +122,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 int main(int argc, char* argv[]){
 	
 	int *grid;
+	int i,j,n;
 		
 	if (argc < 2) {
 		printf("usage: %s filename\n", argv[0]);
@@ -144,7 +145,7 @@ int main(int argc, char* argv[]){
 		
 	int nmax = 2*n*n;
 	int ** grids = (int**) malloc(sizeof(int*)*nmax);
-	int nbGrids, start=0;
+	int nbGrids, start;
 	int res = bfs(grid, possibles, n, nmax, grids, &nbGrids, &start);
 	printf("res:%d\n",res);
 	if ( res == 1 ) {
