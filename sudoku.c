@@ -396,6 +396,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 
 
 
+
 int main(int argc, char** argv){
 	
 	// initialisation de MPI
