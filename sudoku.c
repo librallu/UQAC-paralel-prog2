@@ -411,6 +411,7 @@ int main(int argc, char** argv){
 	for ( i = 0 ; i < n*n ; i++ )
 		for ( j = 0 ; j < n*n ; j++ )
 			possibles[n*n*i+j] = (int*) malloc(sizeof(int)*n*n);
+	printf("end of possibles initialization\n");
 	
 	// For master, read the problem
 	if ( rank == 0 ) { // if master thread
@@ -425,12 +426,14 @@ int main(int argc, char** argv){
 		for ( i = 0 ; i < n*n*n*n ; i++ ) fscanf(f, "%d", &(grid[i]));
 		fclose(f);
 	}
+	printf("end reading file\n");
 	
 	//broadcast size of grid
 	MPI_Bcast(&n,1,MPI_INT,0,MPI_COMM_WORLD);
 	int nmax = 2*n*n;
 	int** grids;
 	int nbGrids, start, res, currentNode = 0;
+	printf("end broadcasting n\n");
 	
 	if ( rank == 0 ){ // if master thread
 		// generate matrix list
@@ -439,9 +442,11 @@ int main(int argc, char** argv){
 		printf("res:%d\n",res);
 		if ( res == 1 ) {
 			display(grid, n);
+			MPI_Finalize();
 			MPI_Abort(MPI_COMM_WORLD, 0);
 		} else if ( res == -1 ) {
 			printf("No solution\n");
+			MPI_Finalize();
 			MPI_Abort(MPI_COMM_WORLD, 0);
 		} else {
 			printf("nb noeuds :%d starting at %d\n",nbGrids, start);
