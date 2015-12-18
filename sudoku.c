@@ -334,6 +334,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 	int i,a,b,k,nbPossibles;
 	for ( i = 0 ; i < nmax ; i++ )
 		grids[i] = (int*) malloc(sizeof(int)*n*n*n*n);
+	printf("end init grids\n");
 	
 	// enqueue the grid
 	copy_grid(grids[0], grid, n);
@@ -352,9 +353,9 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 		// starting by simplifying the grid
 		simplify_all(currentGrid, n, possibles);
 		
-		//~ printf("--- %d --- \n", queueStart);
-		//~ display(currentGrid,n);
-		//~ printf("---\n");
+		printf("--- %d --- \n", queueStart);
+		display(currentGrid,n);
+		printf("---\n");
 		
 		int cont = to_continue(currentGrid, possibles, n);
 		if ( cont == -1 ) { // we solved it
@@ -366,7 +367,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 		} else if ( cont == 0 ) {
 			// choose a position for backtracking
 			nbPossibles = choose_backtracking(currentGrid, possibles, n, &a, &b);
-			//~ printf("nbPossibles : %d (%d,%d)\n", nbPossibles,a,b);
+			printf("nbPossibles : %d (%d,%d)\n", nbPossibles,a,b);
 			if ( nbPossibles + queueSize > nmax ) {
 				stop = 1;
 				*nbGrids = queueSize;
@@ -374,7 +375,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 			} else {
 				for ( k = 1 ; k <= n*n ; k++ ) {
 					if ( possibles[a*n*n+b][k] ) { // if k is possible
-						//~ printf("using k %d\n",k);
+						printf("using k %d\n",k);
 						// copy a new grid
 						copy_grid(grids[(queueStart+queueSize)%nmax], currentGrid, n);
 						grids[(queueStart+queueSize)%nmax][a*n*n+b] = k;
@@ -385,7 +386,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 				queueStart = (queueStart+1)%nmax;
 			}
 		}
-		//~ printf("====\n");
+		printf("====\n");
 	}
 	
 	if ( queueSize == 0 ) return -1;
