@@ -447,8 +447,6 @@ int main(int argc, char** argv){
 	int nbGrids, start, res, currentNode = 0;
 	int nbMessagesPerNode = (int*) calloc(size,sizeof(int));
 	//~ printf("end broadcasting n\n");
-	
-	
 
 	if ( rank == 0 ){ // if master thread
 		// generate matrix list and sending info to workers
