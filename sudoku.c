@@ -330,7 +330,7 @@ int sudoku_verification(int* grid, int n) {
  */
 int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, int* start){
 	
-	printf("start bfs\n");
+	//~ printf("start bfs\n");
 	// grids initialization
 	int i,a,b,k,nbPossibles;
 	for ( i = 0 ; i < nmax ; i++ )
@@ -346,18 +346,18 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 	int stop = 0;
 	while ( queueSize != 0 && !stop ) {
 		// dequeue the grid
-		printf("dequeue\n");
+		//~ printf("dequeue\n");
 		currentGrid = grids[queueStart];
 		
-		display(currentGrid,n);
-		printf(" - - - \n");
+		//~ display(currentGrid,n);
+		//~ printf(" - - - \n");
 		
 		// starting by simplifying the grid
 		simplify_all(currentGrid, n, possibles);
 		
-		printf("--- %d --- \n", queueStart);
-		display(currentGrid,n);
-		printf("---\n");
+		//~ printf("--- %d --- \n", queueStart);
+		//~ display(currentGrid,n);
+		//~ printf("---\n");
 		
 		int cont = to_continue(currentGrid, possibles, n);
 		if ( cont == -1 ) { // we solved it
@@ -369,7 +369,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 		} else if ( cont == 0 ) {
 			// choose a position for backtracking
 			nbPossibles = choose_backtracking(currentGrid, possibles, n, &a, &b);
-			printf("nbPossibles : %d (%d,%d)\n", nbPossibles,a,b);
+			//~ printf("nbPossibles : %d (%d,%d)\n", nbPossibles,a,b);
 			if ( nbPossibles + queueSize > nmax ) {
 				stop = 1;
 				*nbGrids = queueSize;
@@ -377,7 +377,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 			} else {
 				for ( k = 1 ; k <= n*n ; k++ ) {
 					if ( possibles[a*n*n+b][k] ) { // if k is possible
-						printf("using k %d\n",k);
+						//~ printf("using k %d\n",k);
 						// copy a new grid
 						copy_grid(grids[(queueStart+queueSize)%nmax], currentGrid, n);
 						grids[(queueStart+queueSize)%nmax][a*n*n+b] = k;
@@ -388,7 +388,7 @@ int bfs(int* grid, int** possibles, int n, int nmax, int** grids, int* nbGrids, 
 				queueStart = (queueStart+1)%nmax;
 			}
 		}
-		printf("====\n");
+		//~ printf("====\n");
 	}
 	
 	if ( queueSize == 0 ) return -1;
@@ -450,11 +450,9 @@ int main(int argc, char** argv){
 		printf("res:%d\n",res);
 		if ( res == 1 ) {
 			display(grid, n);
-			MPI_Finalize();
 			MPI_Abort(MPI_COMM_WORLD, 0);
 		} else if ( res == -1 ) {
 			printf("No solution\n");
-			MPI_Finalize();
 			MPI_Abort(MPI_COMM_WORLD, 0);
 		} else {
 			printf("nb noeuds :%d starting at %d\n",nbGrids, start);
@@ -473,12 +471,12 @@ int main(int argc, char** argv){
 	}
 	
 	
-	
 	for ( i = 0 ; i < n*n ; i++ )
 		for ( j = 0 ; j < n*n ; j++ )
 			free(possibles[n*n*i+j]);
 	free(possibles);
 	free(grid);
 	
-	
+	MPI_Finalize();
+
 }
